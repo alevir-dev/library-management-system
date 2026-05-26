@@ -4,11 +4,24 @@ import main.java.domain.Biblioteca;
 import main.java.domain.Livro;
 import main.java.domain.Usuario;
 import main.java.enums.StatusLivro;
-import main.java.enums.Type;
 
 public class BibliotecaService {
     Biblioteca biblioteca = new Biblioteca("Biblioteca Municipal");
 
+
+    public void adicionarLivro(Livro livro){
+
+        if (biblioteca.getPosicaoLivro() == Biblioteca.getMAX_BOOKS()){
+            System.out.println("Limite de livros atingido!");
+            return;
+        }
+
+        biblioteca.getLivros()[biblioteca.getPosicaoLivro()] = livro;
+        biblioteca.setPosicaoLivro(biblioteca.getPosicaoLivro() + 1);
+
+        System.out.println("Livro adicionado com sucesso!");
+
+    }
 
     public void adicionarUsuario(Usuario usuario) {
 
@@ -32,6 +45,8 @@ public class BibliotecaService {
         usuario.adicionarLivro(livro);
 
         livro.setStatus(StatusLivro.EMPRESTADO);
+
+        System.out.println("Livro emprestado com sucesso!");
     }
 
     public void devolverLivro(Usuario usuario,String tituloLivro){
