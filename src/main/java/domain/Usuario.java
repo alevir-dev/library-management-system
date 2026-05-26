@@ -1,16 +1,20 @@
 package main.java.domain;
 
-public class Usuario {
+import main.java.enums.Type;
+
+public abstract class Usuario {
     private final String nome;
     private final String CPF;
-    private static final int MAX_LIVROS = 10;
+    private final Type type;
+    private int MAX_LIVROS;
 
-    private Livro[] livros = new Livro[MAX_LIVROS];
+    private Livro[] livros;
     private int posicaoLivros = 0;
 
-    public Usuario(String nome, String CPF) {
+    public Usuario(String nome, String CPF, Type type) {
         this.nome = nome;
         this.CPF = CPF;
+        this.type = type;
     }
 
     public void adicionarLivro(Livro livro) {
@@ -21,7 +25,6 @@ public class Usuario {
     }
 
     public void removerLivro(String tituloLivro) {
-
         int salvarPosicao = -1;
 
         for (int i = 0; i < posicaoLivros; i++) {
@@ -60,5 +63,18 @@ public class Usuario {
 
     public String getCPF() {
         return CPF;
+    }
+
+    public int getMAX_LIVROS() {
+        return MAX_LIVROS;
+    }
+
+    public void setMAX_LIVROS(int MAX_LIVROS) {
+        this.MAX_LIVROS = MAX_LIVROS;
+        this.livros = new  Livro[MAX_LIVROS];
+    }
+
+    public Type getType() {
+        return type;
     }
 }
