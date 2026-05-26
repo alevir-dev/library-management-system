@@ -29,5 +29,16 @@ public class BibliotecaService {
         livro.setStatus(StatusLivro.EMPRESTADO);
     }
 
+    public void devolverLivro(Usuario usuario,String tituloLivro){
+        usuario.removerLivro(tituloLivro);
+
+        for (int i = 0; i < biblioteca.getPosicaoLivro(); i++){
+
+          if (biblioteca.getLivros()[i].getTitulo().equalsIgnoreCase(tituloLivro)){
+              biblioteca.getLivros()[i].setStatus(StatusLivro.DISPONIVEL);
+          }
+        }
+
+    }
 
 }
