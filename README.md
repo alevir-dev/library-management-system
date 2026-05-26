@@ -194,7 +194,7 @@ Este projeto está sob a licença MIT.
 
 ## 👨‍💻 Autor
 
-Desenvolvado por **Alevir Coelho Neto**
+Desenvolvido por **Alevir Coelho Neto**
 
 [![GitHub](https://img.shields.io/badge/GitHub-alevir--dev-181717?style=flat&logo=github)](https://github.com/alevir-dev)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-alevir--coelho--neto-0077B5?style=flat&logo=linkedin)](https://linkedin.com/in/alevir-coelho-neto)
