@@ -3,11 +3,12 @@ package main.java.domain;
 public class Biblioteca {
 
     private final String nome;
-
-    private Usuario[] usuarios = new Usuario[500];
+    private static final int MAX_USERS = 500;
+    private Usuario[] usuarios = new Usuario[MAX_USERS];
     private int posicaoUsuario = 0;
 
-    private Livro[] livros = new Livro[1500];
+    private static final int MAX_BOOKS = 1500;
+    private Livro[] livros = new Livro[MAX_BOOKS];
     private int posicaoLivro = 0;
 
     public Biblioteca(String nome) {
@@ -48,6 +49,13 @@ public class Biblioteca {
 
     public void setPosicaoLivro(int posicaoLivro) {
         this.posicaoLivro = posicaoLivro;
+    }
+
+    public static int getMAX_USERS(){
+        return MAX_USERS;
+    }
+    public static int getMAX_BOOKS(){
+        return MAX_BOOKS;
     }
 
 }

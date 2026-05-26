@@ -7,10 +7,15 @@ import main.java.enums.StatusLivro;
 import main.java.enums.Type;
 
 public class BibliotecaService {
-    Biblioteca biblioteca;
+    Biblioteca biblioteca = new Biblioteca("Biblioteca Municipal");
 
 
     public void adicionarUsuario(Usuario usuario) {
+
+        if (biblioteca.getPosicaoUsuario() == Biblioteca.getMAX_USERS()){
+            System.out.println("Quantidade máxima de usuários atingida!");
+            return;
+        }
 
         biblioteca.getUsuarios()[biblioteca.getPosicaoUsuario()] = usuario;
 
