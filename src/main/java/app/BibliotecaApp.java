@@ -101,6 +101,29 @@ public class BibliotecaApp {
                     }
 
                     bibliotecaService.emprestarLivro(usuarioBusca, livroBusca);
+                    break;
+
+                case 4:
+                    System.out.print("Digite o CPF do usuário: ");
+                    userCPF = scanner.nextLine();
+
+                    Usuario usuarioDevolverLivro = bibliotecaService.buscarUsuario(userCPF);
+                    if (usuarioDevolverLivro == null) {
+                        System.out.println("Usuário não encontrado");
+                        return;
+                    }
+
+                    System.out.print("Digite o titulo do livro que deseja devolver: ");
+                    titleBook = scanner.nextLine();
+
+
+                    bibliotecaService.devolverLivro(usuarioDevolverLivro, titleBook);
+                    break;
+
+                case 0:
+                    System.out.println("Saindo...");
+                    break;
+
             }
 
 

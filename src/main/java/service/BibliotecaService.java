@@ -91,6 +91,22 @@ public class BibliotecaService {
     }
 
     public void devolverLivro(Usuario usuario, String tituloLivro) {
+
+        boolean encontrou = false;
+
+        for (int i = 0; i < usuario.getPosicaoLivros(); i++) {
+            if (usuario.getLivros()[i].getTitulo().equalsIgnoreCase(tituloLivro)) {
+                encontrou = true;
+                break;
+            }
+
+        }
+
+        if (!encontrou) {
+            System.out.println("Título não encontrado!");
+            return;
+        }
+
         usuario.removerLivro(tituloLivro);
 
         for (int i = 0; i < biblioteca.getPosicaoLivro(); i++) {
