@@ -9,9 +9,9 @@ public class BibliotecaService {
     Biblioteca biblioteca = new Biblioteca("Biblioteca Municipal");
 
 
-    public void adicionarLivro(Livro livro){
+    public void adicionarLivro(Livro livro) {
 
-        if (biblioteca.getPosicaoLivro() == Biblioteca.getMAX_BOOKS()){
+        if (biblioteca.getPosicaoLivro() == Biblioteca.getMAX_BOOKS()) {
             System.out.println("Limite de livros atingido!");
             return;
         }
@@ -25,7 +25,7 @@ public class BibliotecaService {
 
     public void adicionarUsuario(Usuario usuario) {
 
-        if (biblioteca.getPosicaoUsuario() == Biblioteca.getMAX_USERS()){
+        if (biblioteca.getPosicaoUsuario() == Biblioteca.getMAX_USERS()) {
             System.out.println("Quantidade máxima de usuários atingida!");
             return;
         }
@@ -38,8 +38,8 @@ public class BibliotecaService {
     }
 
     public void emprestarLivro(Usuario usuario, Livro livro) {
-        if (usuario.getPosicaoLivros() == usuario.getMAX_LIVROS()){
-            System.out.println("O " + usuario.getType().getDescricao()+" atingiu o máximo de livros emprestados!");
+        if (usuario.getPosicaoLivros() == usuario.getMAX_LIVROS()) {
+            System.out.println("O " + usuario.getType().getDescricao() + " atingiu o máximo de livros emprestados!");
             return;
         }
         usuario.adicionarLivro(livro);
@@ -49,14 +49,14 @@ public class BibliotecaService {
         System.out.println("Livro emprestado com sucesso!");
     }
 
-    public void devolverLivro(Usuario usuario,String tituloLivro){
+    public void devolverLivro(Usuario usuario, String tituloLivro) {
         usuario.removerLivro(tituloLivro);
 
-        for (int i = 0; i < biblioteca.getPosicaoLivro(); i++){
+        for (int i = 0; i < biblioteca.getPosicaoLivro(); i++) {
 
-          if (biblioteca.getLivros()[i].getTitulo().equalsIgnoreCase(tituloLivro)){
-              biblioteca.getLivros()[i].setStatus(StatusLivro.DISPONIVEL);
-          }
+            if (biblioteca.getLivros()[i].getTitulo().equalsIgnoreCase(tituloLivro)) {
+                biblioteca.getLivros()[i].setStatus(StatusLivro.DISPONIVEL);
+            }
         }
 
     }

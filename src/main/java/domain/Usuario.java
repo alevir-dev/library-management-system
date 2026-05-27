@@ -71,7 +71,7 @@ public abstract class Usuario {
 
     public void setMAX_LIVROS(int MAX_LIVROS) {
         this.MAX_LIVROS = MAX_LIVROS;
-        this.livros = new  Livro[MAX_LIVROS];
+        this.livros = new Livro[MAX_LIVROS];
     }
 
     public Type getType() {

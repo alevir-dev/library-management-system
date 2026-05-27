@@ -51,10 +51,11 @@ public class Biblioteca {
         this.posicaoLivro = posicaoLivro;
     }
 
-    public static int getMAX_USERS(){
+    public static int getMAX_USERS() {
         return MAX_USERS;
     }
-    public static int getMAX_BOOKS(){
+
+    public static int getMAX_BOOKS() {
         return MAX_BOOKS;
     }
 
