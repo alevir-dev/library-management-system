@@ -14,8 +14,11 @@ Sistema de gerenciamento de biblioteca desenvolvido em **Java SE**, com foco em 
 | Devolução de livros | ✅ |
 | Controle de disponibilidade via Enum | ✅ |
 | Validação de limite de empréstimos por tipo de usuário | ✅ |
+| Validação de livro já emprestado | ✅ |
 | Diferentes tipos de usuário (Aluno, Professor, Bibliotecário) | ✅ |
-| Controle de status via Enum | ✅ |
+| Menu interativo no console | ✅ |
+| Busca de usuário por CPF | ✅ |
+| Busca de livro por título | ✅ |
 
 ---
 
@@ -178,8 +181,6 @@ Praticar e demonstrar:
 
 ## 🚧 Próximos passos
 
-- [ ] Implementar menu interativo no console
-- [ ] Adicionar busca de livros e usuários
 - [ ] Migrar arrays para `ArrayList`
 - [ ] Persistência de dados com JDBC + MySQL
 - [ ] API REST com Spring Boot
