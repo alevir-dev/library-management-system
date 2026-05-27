@@ -4,6 +4,7 @@ import main.java.domain.Biblioteca;
 import main.java.domain.Livro;
 import main.java.domain.Usuario;
 import main.java.enums.StatusLivro;
+import main.java.enums.Type;
 
 public class BibliotecaService {
     Biblioteca biblioteca = new Biblioteca("Biblioteca Municipal");
@@ -61,16 +62,32 @@ public class BibliotecaService {
         return null;
     }
 
+    public boolean isBookAvailable(String titulo) {
+
+        Livro livro = buscarLivro(titulo);
+
+        return livro != null && livro.getStatus() == StatusLivro.DISPONIVEL;
+    }
+
     public void emprestarLivro(Usuario usuario, Livro livro) {
         if (usuario.getPosicaoLivros() == usuario.getMAX_LIVROS()) {
             System.out.println("O " + usuario.getType().getDescricao() + " atingiu o máximo de livros emprestados!");
             return;
         }
-        usuario.adicionarLivro(livro);
 
-        livro.setStatus(StatusLivro.EMPRESTADO);
+        if (isBookAvailable(livro.getTitulo())) {
+            usuario.adicionarLivro(livro);
 
-        System.out.println("Livro emprestado com sucesso!");
+            livro.setStatus(StatusLivro.EMPRESTADO);
+
+            System.out.println("Livro emprestado com sucesso!");
+
+            return;
+        }
+
+        System.out.println("Livro indisponível para empréstimo!");
+
+
     }
 
     public void devolverLivro(Usuario usuario, String tituloLivro) {
