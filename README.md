@@ -39,7 +39,7 @@ src/
            ├── app/         → ponto de entrada da aplicação
            ├── domain/      → entidades do sistema (Usuario, Livro, Biblioteca)
            ├── service/     → regras de negócio e validações
-           └── enums/       → StatusLivro e Type (tipos de usuário)
+           └── enums/       → estados e tipos do sistema
 ```
 
 ---
@@ -144,9 +144,12 @@ flowchart TD
 ```mermaid
 flowchart TD
     A[Usuário devolve livro]
-    --> B[Remove livro do array do usuário]
-    B --> C[Localiza livro na biblioteca]
-    C --> D[Atualiza status para DISPONIVEL]
+    --> B[Verifica se livro está no array do usuário]
+    B --> C{Livro encontrado?}
+    C -- Não --> D[Devolução negada]
+    C -- Sim --> E[Remove livro do array do usuário]
+    E --> F[Localiza livro na biblioteca]
+    F --> G[Atualiza status para DISPONIVEL]
 ```
 
 ---
