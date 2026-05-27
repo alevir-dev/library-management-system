@@ -1,9 +1,6 @@
 package main.java.app;
 
-import main.java.domain.Aluno;
-import main.java.domain.Bibliotecario;
-import main.java.domain.Livro;
-import main.java.domain.Professor;
+import main.java.domain.*;
 import main.java.enums.Type;
 import main.java.service.BibliotecaService;
 
@@ -86,6 +83,24 @@ public class BibliotecaApp {
 
                     bibliotecaService.adicionarLivro(livro);
                     break;
+
+                case 3:
+                    System.out.print("Digite o CPF do usuário: ");
+                    userCPF = scanner.nextLine();
+                    Usuario usuarioBusca = bibliotecaService.buscarUsuario(userCPF);
+                    if (usuarioBusca == null) {
+                        System.out.println("Usuário não encontrado!");
+                        return;
+                    }
+                    System.out.print("Digite o título do livro: ");
+                    titleBook = scanner.nextLine();
+                    Livro livroBusca = bibliotecaService.buscarLivro(titleBook);
+                    if (livroBusca == null) {
+                        System.out.println("Livro não encontrado!");
+                        break;
+                    }
+
+                    bibliotecaService.emprestarLivro(usuarioBusca, livroBusca);
             }
 
 

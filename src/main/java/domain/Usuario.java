@@ -20,8 +20,6 @@ public abstract class Usuario {
     public void adicionarLivro(Livro livro) {
         this.livros[posicaoLivros] = livro;
         posicaoLivros++;
-
-        System.out.println("Livro adicionado com sucesso!");
     }
 
     public void removerLivro(String tituloLivro) {

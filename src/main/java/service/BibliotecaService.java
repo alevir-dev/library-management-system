@@ -37,6 +37,30 @@ public class BibliotecaService {
         System.out.println("Usuário adicionado com sucesso!");
     }
 
+    public Usuario buscarUsuario(String CPF) {
+
+        for (int i = 0; i < biblioteca.getPosicaoUsuario(); i++) {
+
+            if (biblioteca.getUsuarios()[i].getCPF().equalsIgnoreCase(CPF)) {
+                return biblioteca.getUsuarios()[i];
+            }
+        }
+
+        return null;
+    }
+
+    public Livro buscarLivro(String titulo) {
+
+        for (int i = 0; i < biblioteca.getPosicaoLivro(); i++) {
+            if (biblioteca.getLivros()[i].getTitulo().equalsIgnoreCase(titulo)) {
+                return biblioteca.getLivros()[i];
+            }
+
+
+        }
+        return null;
+    }
+
     public void emprestarLivro(Usuario usuario, Livro livro) {
         if (usuario.getPosicaoLivros() == usuario.getMAX_LIVROS()) {
             System.out.println("O " + usuario.getType().getDescricao() + " atingiu o máximo de livros emprestados!");
