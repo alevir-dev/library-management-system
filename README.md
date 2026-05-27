@@ -8,13 +8,13 @@ Sistema de gerenciamento de biblioteca desenvolvido em **Java SE**, com foco em 
 
 | Funcionalidade | Status |
 |---|---|
-| Cadastro de livros | ✅ |
-| Cadastro de usuários | ✅ |
+| Cadastro de livros com validação de limite | ✅ |
+| Cadastro de usuários com validação de limite | ✅ |
 | Empréstimo de livros | ✅ |
 | Devolução de livros | ✅ |
-| Controle de disponibilidade | ✅ |
-| Validação de usuários e livros | ✅ |
-| Listagem de livros por usuário | ✅ |
+| Controle de disponibilidade via Enum | ✅ |
+| Validação de limite de empréstimos por tipo de usuário | ✅ |
+| Diferentes tipos de usuário (Aluno, Professor, Bibliotecário) | ✅ |
 | Controle de status via Enum | ✅ |
 
 ---
@@ -34,9 +34,9 @@ src/
  └── main/
       └── java/
            ├── app/         → ponto de entrada da aplicação
-           ├── domain/      → entidades do sistema
+           ├── domain/      → entidades do sistema (Usuario, Livro, Biblioteca)
            ├── service/     → regras de negócio e validações
-           └── enums/       → estados e enums do sistema
+           └── enums/       → StatusLivro e Type (tipos de usuário)
 ```
 
 ---
@@ -44,12 +44,14 @@ src/
 ## 🧠 Conceitos aplicados
 
 - **Programação Orientada a Objetos**
+- **Herança e Classes Abstratas**
 - **Encapsulamento**
-- **Enums**
+- **Enums com atributos e métodos**
 - **Arquitetura em camadas**
 - **Modelagem de domínio**
 - **Regras de negócio separadas em camada de serviço**
-- **Validações**
+- **Validações de limite e disponibilidade**
+- **Constantes estáticas para eliminar magic numbers**
 - **Gerenciamento manual de coleções com arrays**
 
 ---
@@ -69,39 +71,50 @@ private StatusLivro status;
 
 Responsabilidades:
 - armazenar informações do livro
-- controlar disponibilidade
-- representar um item da biblioteca
+- controlar disponibilidade via `StatusLivro`
 
 ---
 
-### 👤 Usuario
+### 👤 Usuario (Abstract)
 
-Representa um usuário cadastrado na biblioteca.
+Classe base para todos os tipos de usuário.
 
 ```java
 private String nome;
 private String CPF;
-private Livro[] livrosEmprestados;
+private Type type;
+private int MAX_LIVROS;
+private Livro[] livros;
 ```
 
 Responsabilidades:
-- armazenar dados do usuário
+- armazenar dados comuns de qualquer usuário
 - gerenciar livros emprestados
+- definir o contrato de tipo via método abstrato
+
+Tipos concretos:
+
+| Tipo | Limite de livros |
+|---|---|
+| Aluno | 5 |
+| Professor | 10 |
+| Bibliotecário | 15 |
 
 ---
 
 ### 🏛️ Biblioteca
 
-Representa o núcleo da biblioteca, armazenando usuários e livros cadastrados.
+Representa o núcleo da biblioteca.
 
 ```java
-private Livro[] livros;
+private static final int MAX_USERS = 500;
+private static final int MAX_BOOKS = 1500;
 private Usuario[] usuarios;
+private Livro[] livros;
 ```
 
 Responsabilidades:
-- armazenar usuários
-- armazenar livros
+- armazenar usuários e livros com limites definidos
 - centralizar os dados do sistema
 
 ---
@@ -111,52 +124,62 @@ Responsabilidades:
 ```mermaid
 flowchart TD
     A[Usuário solicita livro]
-    --> B[Verifica existência do livro]
-
-    B --> C{Livro disponível?}
-
-    C -- Sim --> D[Valida usuário]
-    C -- Não --> E[Empréstimo negado]
-
-    D --> F[Adiciona livro ao usuário]
-    F --> G[Atualiza status para EMPRESTADO]
+    --> B[Verifica limite do usuário]
+    B --> C{Limite atingido?}
+    C -- Sim --> D[Empréstimo negado]
+    C -- Não --> E[Verifica disponibilidade do livro]
+    E --> F{Livro disponível?}
+    F -- Não --> G[Empréstimo negado]
+    F -- Sim --> H[Adiciona livro ao usuário]
+    H --> I[Atualiza status para EMPRESTADO]
 ```
 
 ---
 
-## 📌 Status dos livros
+## 🔄 Fluxo de devolução
+
+```mermaid
+flowchart TD
+    A[Usuário devolve livro]
+    --> B[Remove livro do array do usuário]
+    B --> C[Localiza livro na biblioteca]
+    C --> D[Atualiza status para DISPONIVEL]
+```
+
+---
+
+## 📌 Enums
 
 ```java
 public enum StatusLivro {
     DISPONIVEL,
     EMPRESTADO
 }
-```
 
-O sistema utiliza Enum para controlar os estados possíveis dos livros durante o fluxo de empréstimo e devolução.
+public enum Type {
+    ALUNO("Aluno"),
+    PROFESSOR("Professor"),
+    BIBLIOTECARIO("Bibliotecario");
+}
+```
 
 ---
 
 ## 🎯 Objetivo do projeto
 
-Este projeto foi desenvolvido com o objetivo de praticar:
-
-- lógica de programação
-- organização de código
-- arquitetura orientada a objetos
-- separação de responsabilidades
-- modelagem de sistemas reais
+Praticar e demonstrar:
+- modelagem de sistemas reais com Java
+- herança e classes abstratas aplicadas a domínio concreto
+- separação de responsabilidades entre camadas
 - validações e regras de negócio
-- boas práticas com Java
+- boas práticas com constantes, enums e encapsulamento
 
 ---
 
 ## 🚧 Próximos passos
 
 - [ ] Implementar menu interativo no console
-- [ ] Adicionar busca de livros
-- [ ] Adicionar busca de usuários
-- [ ] Limite de empréstimos por usuário
+- [ ] Adicionar busca de livros e usuários
 - [ ] Migrar arrays para `ArrayList`
 - [ ] Persistência de dados com JDBC + MySQL
 - [ ] API REST com Spring Boot
