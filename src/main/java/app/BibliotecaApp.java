@@ -27,6 +27,7 @@ public class BibliotecaApp {
             System.out.println("2 - Cadastrar livro");
             System.out.println("3 - Emprestar livro");
             System.out.println("4 - Devolver livro");
+            System.out.println("5 - Listar livros da biblioteca");
             System.out.println("0 - Sair");
             System.out.println();
             System.out.print("Digite uma opção: ");
@@ -118,6 +119,11 @@ public class BibliotecaApp {
 
 
                     bibliotecaService.devolverLivro(usuarioDevolverLivro, titleBook);
+                    break;
+
+                case 5:
+                    System.out.println("=======LIVROS=======");
+                    bibliotecaService.listarLivros();
                     break;
 
                 case 0:

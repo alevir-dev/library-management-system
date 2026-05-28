@@ -59,6 +59,25 @@ public class BibliotecaService {
         return null;
     }
 
+    public void listarLivros(){
+
+        if (biblioteca.getLivros().isEmpty()){
+            System.out.println("Nenhum livro cadastrado.");
+            return;
+        }
+
+        for (int i = 0; i < biblioteca.getLivros().size(); i++){
+            System.out.println("======================================");
+            System.out.println(biblioteca.getLivros().get(i).getTitulo());
+            System.out.println(biblioteca.getLivros().get(i).getAutor());
+            System.out.println(biblioteca.getLivros().get(i).getPaginas());
+            System.out.println(biblioteca.getLivros().get(i).getStatus());
+
+        }
+
+
+    }
+
     public boolean isBookAvailable(String titulo) {
 
         Livro livro = buscarLivro(titulo);
