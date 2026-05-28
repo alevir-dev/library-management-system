@@ -72,7 +72,33 @@ public class BibliotecaService {
             System.out.println(biblioteca.getLivros().get(i).getAutor());
             System.out.println(biblioteca.getLivros().get(i).getPaginas());
             System.out.println(biblioteca.getLivros().get(i).getStatus());
+        }
+    }
 
+    public void listarLivrosPorStatus(StatusLivro statusLivro){
+
+        if (biblioteca.getLivros().isEmpty()){
+            System.out.println("Nenhum livro cadastrado.");
+            return;
+        }
+
+        boolean encontrou = false;
+
+        for (int i = 0; i < biblioteca.getLivros().size(); i++){
+            if (biblioteca.getLivros().get(i).getStatus().equals(statusLivro)){
+                if (!encontrou){
+                    System.out.println("======LIVROS " + statusLivro.getDescricao().toUpperCase() + "S=====");
+                    encontrou = true;
+                }
+                System.out.println(biblioteca.getLivros().get(i).getTitulo());
+                System.out.println(biblioteca.getLivros().get(i).getAutor());
+                System.out.println(biblioteca.getLivros().get(i).getPaginas());
+                System.out.println(biblioteca.getLivros().get(i).getStatus().getDescricao());
+            }
+        }
+
+        if (!encontrou){
+            System.out.println("Nenhum livro " + statusLivro.getDescricao() + " no momento.");
         }
 
 

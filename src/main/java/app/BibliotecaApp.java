@@ -1,6 +1,7 @@
 package main.java.app;
 
 import main.java.domain.*;
+import main.java.enums.StatusLivro;
 import main.java.enums.Type;
 import main.java.service.BibliotecaService;
 
@@ -28,6 +29,8 @@ public class BibliotecaApp {
             System.out.println("3 - Emprestar livro");
             System.out.println("4 - Devolver livro");
             System.out.println("5 - Listar livros da biblioteca");
+            System.out.println("6 - Listar livros disponíveis");
+            System.out.println("7 - Listar livros emprestados");
             System.out.println("0 - Sair");
             System.out.println();
             System.out.print("Digite uma opção: ");
@@ -91,7 +94,7 @@ public class BibliotecaApp {
                     Usuario usuarioBusca = bibliotecaService.buscarUsuario(userCPF);
                     if (usuarioBusca == null) {
                         System.out.println("Usuário não encontrado!");
-                        return;
+                        break;
                     }
                     System.out.print("Digite o título do livro: ");
                     titleBook = scanner.nextLine();
@@ -111,7 +114,7 @@ public class BibliotecaApp {
                     Usuario usuarioDevolverLivro = bibliotecaService.buscarUsuario(userCPF);
                     if (usuarioDevolverLivro == null) {
                         System.out.println("Usuário não encontrado");
-                        return;
+                        break;
                     }
 
                     System.out.print("Digite o titulo do livro que deseja devolver: ");
@@ -126,6 +129,13 @@ public class BibliotecaApp {
                     bibliotecaService.listarLivros();
                     break;
 
+                case 6:
+                    bibliotecaService.listarLivrosPorStatus(StatusLivro.DISPONIVEL);
+                    break;
+
+                case 7:
+                    bibliotecaService.listarLivrosPorStatus(StatusLivro.EMPRESTADO);
+                    break;
                 case 0:
                     System.out.println("Saindo...");
                     break;
