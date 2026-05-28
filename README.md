@@ -19,6 +19,8 @@ Sistema de gerenciamento de biblioteca desenvolvido em **Java SE**, com foco em 
 | Menu interativo no console | ✅ |
 | Busca de usuário por CPF | ✅ |
 | Busca de livro por título | ✅ |
+| Listagem de todos os livros | ✅ |
+| Listagem de livros por status | ✅ |
 
 ---
 
@@ -55,7 +57,7 @@ src/
 - **Regras de negócio separadas em camada de serviço**
 - **Validações de limite e disponibilidade**
 - **Constantes estáticas para eliminar magic numbers**
-- **Gerenciamento manual de coleções com arrays**
+- **Coleções com ArrayList**
 
 ---
 
@@ -87,7 +89,7 @@ private String nome;
 private String CPF;
 private Type type;
 private int MAX_LIVROS;
-private Livro[] livros;
+private ArrayList<Livro> livros;
 ```
 
 Responsabilidades:
@@ -110,14 +112,12 @@ Tipos concretos:
 Representa o núcleo da biblioteca.
 
 ```java
-private static final int MAX_USERS = 500;
-private static final int MAX_BOOKS = 1500;
-private Usuario[] usuarios;
-private Livro[] livros;
+private ArrayList<Usuario> usuarios;
+private ArrayList<Livro> livros;
 ```
 
 Responsabilidades:
-- armazenar usuários e livros com limites definidos
+- armazenar usuários e livros
 - centralizar os dados do sistema
 
 ---
@@ -144,10 +144,10 @@ flowchart TD
 ```mermaid
 flowchart TD
     A[Usuário devolve livro]
-    --> B[Verifica se livro está no array do usuário]
+    --> B[Verifica se livro está na lista do usuário]
     B --> C{Livro encontrado?}
     C -- Não --> D[Devolução negada]
-    C -- Sim --> E[Remove livro do array do usuário]
+    C -- Sim --> E[Remove livro da lista do usuário]
     E --> F[Localiza livro na biblioteca]
     F --> G[Atualiza status para DISPONIVEL]
 ```
@@ -158,14 +158,14 @@ flowchart TD
 
 ```java
 public enum StatusLivro {
-    DISPONIVEL,
-    EMPRESTADO
+    DISPONIVEL("Disponível"),
+    EMPRESTADO("Emprestado")
 }
 
 public enum Type {
     ALUNO("Aluno"),
     PROFESSOR("Professor"),
-    BIBLIOTECARIO("Bibliotecario");
+    BIBLIOTECARIO("Bibliotecario")
 }
 ```
 
@@ -179,12 +179,12 @@ Praticar e demonstrar:
 - separação de responsabilidades entre camadas
 - validações e regras de negócio
 - boas práticas com constantes, enums e encapsulamento
+- uso de coleções com ArrayList
 
 ---
 
 ## 🚧 Próximos passos
 
-- [ ] Migrar arrays para `ArrayList`
 - [ ] Persistência de dados com JDBC + MySQL
 - [ ] API REST com Spring Boot
 
