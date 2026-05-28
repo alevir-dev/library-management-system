@@ -2,14 +2,15 @@ package main.java.domain;
 
 import main.java.enums.Type;
 
+import java.util.ArrayList;
+
 public abstract class Usuario {
     private final String nome;
     private final String CPF;
     private final Type type;
     private int MAX_LIVROS;
 
-    private Livro[] livros;
-    private int posicaoLivros = 0;
+    private ArrayList<Livro> livros = new ArrayList<Livro>();
 
     public Usuario(String nome, String CPF, Type type) {
         this.nome = nome;
@@ -18,41 +19,18 @@ public abstract class Usuario {
     }
 
     public void adicionarLivro(Livro livro) {
-        this.livros[posicaoLivros] = livro;
-        posicaoLivros++;
+        this.livros.add(livro);
     }
 
     public void removerLivro(String tituloLivro) {
-        int salvarPosicao = -1;
+        boolean removeu = livros.removeIf(livros -> livros.getTitulo().equalsIgnoreCase(tituloLivro));
 
-        for (int i = 0; i < posicaoLivros; i++) {
-            if (livros[i].getTitulo().equalsIgnoreCase(tituloLivro)) {
-                salvarPosicao = i;
-                break;
-            }
-        }
-
-        if (salvarPosicao == -1) {
+        if (!removeu) {
             System.out.println("Título não encontrado!");
             return;
         }
 
-        for (int i = salvarPosicao; i < posicaoLivros - 1; i++) {
-            livros[i] = livros[i + 1];
-        }
-
-        livros[posicaoLivros - 1] = null;
-        posicaoLivros--;
-
         System.out.println("Livro devolvido com sucesso!");
-    }
-
-    public Livro[] getLivros() {
-        return livros;
-    }
-
-    public int getPosicaoLivros() {
-        return posicaoLivros;
     }
 
     public String getNome() {
@@ -67,9 +45,12 @@ public abstract class Usuario {
         return MAX_LIVROS;
     }
 
+    public ArrayList<Livro> getLivros() {
+        return livros;
+    }
+
     public void setMAX_LIVROS(int MAX_LIVROS) {
         this.MAX_LIVROS = MAX_LIVROS;
-        this.livros = new Livro[MAX_LIVROS];
     }
 
     public Type getType() {

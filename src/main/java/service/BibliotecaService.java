@@ -4,21 +4,22 @@ import main.java.domain.Biblioteca;
 import main.java.domain.Livro;
 import main.java.domain.Usuario;
 import main.java.enums.StatusLivro;
-import main.java.enums.Type;
+
 
 public class BibliotecaService {
     Biblioteca biblioteca = new Biblioteca("Biblioteca Municipal");
+    private static final int MAX_USERS = 1000;
+    private static final int MAX_BOOKS = 1000;
 
 
     public void adicionarLivro(Livro livro) {
 
-        if (biblioteca.getPosicaoLivro() == Biblioteca.getMAX_BOOKS()) {
+        if (biblioteca.getLivros().size() == MAX_BOOKS) {
             System.out.println("Limite de livros atingido!");
             return;
         }
 
-        biblioteca.getLivros()[biblioteca.getPosicaoLivro()] = livro;
-        biblioteca.setPosicaoLivro(biblioteca.getPosicaoLivro() + 1);
+        biblioteca.getLivros().add(livro);
 
         System.out.println("Livro adicionado com sucesso!");
 
@@ -26,24 +27,22 @@ public class BibliotecaService {
 
     public void adicionarUsuario(Usuario usuario) {
 
-        if (biblioteca.getPosicaoUsuario() == Biblioteca.getMAX_USERS()) {
+        if (biblioteca.getUsuarios().size() == MAX_USERS) {
             System.out.println("Quantidade máxima de usuários atingida!");
             return;
         }
 
-        biblioteca.getUsuarios()[biblioteca.getPosicaoUsuario()] = usuario;
-
-        biblioteca.setPosicaoUsuario(biblioteca.getPosicaoUsuario() + 1);
+        biblioteca.getUsuarios().add(usuario);
 
         System.out.println("Usuário adicionado com sucesso!");
     }
 
     public Usuario buscarUsuario(String CPF) {
 
-        for (int i = 0; i < biblioteca.getPosicaoUsuario(); i++) {
+        for (int i = 0; i < biblioteca.getUsuarios().size(); i++) {
 
-            if (biblioteca.getUsuarios()[i].getCPF().equalsIgnoreCase(CPF)) {
-                return biblioteca.getUsuarios()[i];
+            if (biblioteca.getUsuarios().get(i).getCPF().equalsIgnoreCase(CPF)) {
+                return biblioteca.getUsuarios().get(i);
             }
         }
 
@@ -52,12 +51,10 @@ public class BibliotecaService {
 
     public Livro buscarLivro(String titulo) {
 
-        for (int i = 0; i < biblioteca.getPosicaoLivro(); i++) {
-            if (biblioteca.getLivros()[i].getTitulo().equalsIgnoreCase(titulo)) {
-                return biblioteca.getLivros()[i];
+        for (int i = 0; i < biblioteca.getLivros().size(); i++) {
+            if (biblioteca.getLivros().get(i).getTitulo().equalsIgnoreCase(titulo)) {
+                return biblioteca.getLivros().get(i);
             }
-
-
         }
         return null;
     }
@@ -70,7 +67,7 @@ public class BibliotecaService {
     }
 
     public void emprestarLivro(Usuario usuario, Livro livro) {
-        if (usuario.getPosicaoLivros() == usuario.getMAX_LIVROS()) {
+        if (usuario.getLivros().size() == usuario.getMAX_LIVROS()) {
             System.out.println("O " + usuario.getType().getDescricao() + " atingiu o máximo de livros emprestados!");
             return;
         }
@@ -94,8 +91,8 @@ public class BibliotecaService {
 
         boolean encontrou = false;
 
-        for (int i = 0; i < usuario.getPosicaoLivros(); i++) {
-            if (usuario.getLivros()[i].getTitulo().equalsIgnoreCase(tituloLivro)) {
+        for (int i = 0; i < usuario.getLivros().size(); i++) {
+            if (usuario.getLivros().get(i).getTitulo().equalsIgnoreCase(tituloLivro)) {
                 encontrou = true;
                 break;
             }
@@ -109,12 +106,13 @@ public class BibliotecaService {
 
         usuario.removerLivro(tituloLivro);
 
-        for (int i = 0; i < biblioteca.getPosicaoLivro(); i++) {
+        for (int i = 0; i < biblioteca.getLivros().size(); i++) {
 
-            if (biblioteca.getLivros()[i].getTitulo().equalsIgnoreCase(tituloLivro)) {
-                biblioteca.getLivros()[i].setStatus(StatusLivro.DISPONIVEL);
+            if (biblioteca.getLivros().get(i).getTitulo().equalsIgnoreCase(tituloLivro)) {
+                biblioteca.getLivros().get(i).setStatus(StatusLivro.DISPONIVEL);
             }
         }
+
 
     }
 
